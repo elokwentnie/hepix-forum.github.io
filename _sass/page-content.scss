@@ -370,6 +370,37 @@ main .container.page-content {
         }
       }
     }
+
+    &--new {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 4px solid #059669;
+
+      .update-banner__badge {
+        color: #ffffff;
+        background: #059669;
+        border-color: #047857;
+      }
+
+      .update-banner__label {
+        color: #047857;
+      }
+
+      .update-banner__message {
+        color: #065f46;
+
+        a {
+          color: #047857 !important;
+          border-bottom-color: rgba(#047857, 0.35) !important;
+          font-weight: 600;
+
+          &:hover {
+            color: #065f46 !important;
+            border-bottom-color: #059669 !important;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -403,6 +434,10 @@ main .container.page-content {
   details.metrics-toggle {
     max-width: none;
     margin: 0.75rem 0 1rem;
+  }
+
+  .update-banner {
+    max-width: none;
   }
 }
 

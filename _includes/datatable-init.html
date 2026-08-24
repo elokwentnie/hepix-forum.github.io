@@ -17,6 +17,7 @@ $(function () {
         fixedHeader: false,
         scrollX: true,
         scrollCollapse: true,
+        pageLength: 25,
         pagingType: 'simple_numbers',
         dom: "<'datatable-controls'lf>rt<'datatable-footer'ip>",
         initComplete: function () {
@@ -71,6 +72,30 @@ $(function () {
                 'HS23/W',
                 'Site'
             ];
+            var hs23DefaultVisible = [
+                'CPU',
+                'SMT enabled',
+                'Ncores',
+                'NUMA nodes',
+                'Power Policy',
+                '# Meas',
+                'Score',
+                'Score/Ncores',
+                'RAM [GiB]',
+                'RAM/core [GiB]',
+                'SWAP/core [GiB]',
+                'Average Electric Power [W]',
+                'HS23/W',
+                'Site'
+            ];
+            var headerTitles = [];
+            api.columns().every(function (idx) {
+                headerTitles.push($(api.column(idx).header()).text().trim());
+            });
+            var isHs23Scores = headerTitles.indexOf('RAM [GiB]') !== -1;
+            if (isHs23Scores) {
+                essentialColumns = hs23DefaultVisible;
+            }
             var updateVisibleCount = function () {
                 columnPanel.find('.datatable-visible-count').text(api.columns(':visible').count());
             };
@@ -163,7 +188,9 @@ $(function () {
                             applyVisibilityBatch();
                         });
                         toggleByIndex[colIdx] = toggle;
-                        if (defaultHidden.indexOf(title) !== -1) {
+                        if (isHs23Scores) {
+                            setVisibility(colIdx, isEssential(title));
+                        } else if (defaultHidden.indexOf(title) !== -1) {
                             setVisibility(colIdx, false);
                         } else {
                             setVisibility(colIdx, column.visible());
