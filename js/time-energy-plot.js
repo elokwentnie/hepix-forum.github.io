@@ -43,7 +43,10 @@
         coresPerSocket: r.cores_per_socket || '',
         threadsPerCore: r.threads_per_core || '',
         ncores: r.ncores || '',
-        ram: r.ram || '',
+        numa: r.numa || '',
+        ram: r.ram,
+        ramPerCore: r.ram_per_core,
+        swapPerCore: r.swap_per_core,
         powerPolicy: r.power_policy || '',
         meas: r.meas || '',
         score: num(r.score),
@@ -148,8 +151,11 @@
       '<b>' + esc(r.cpu) + '</b>',
       'Site: ' + fmt(r.site) + '   |   SMT: ' + (r.smtOn ? 'enabled' : 'disabled'),
       'Layout: ' + fmt(r.sockets) + ' socket(s) \u00d7 ' + fmt(r.coresPerSocket) +
-        ' cores, ' + fmt(r.threadsPerCore) + ' thr/core (' + fmt(r.ncores) + ' cores)',
-      'RAM: ' + fmt(r.ram) + '   |   Power policy: ' + fmt(r.powerPolicy),
+        ' cores, ' + fmt(r.threadsPerCore) + ' thr/core (' + fmt(r.ncores) +
+        ' cores, ' + fmt(r.numa) + ' NUMA)',
+      'RAM: ' + fmt(r.ram) + ' GiB (' + fmt(r.ramPerCore) + ' GiB/core)   |   SWAP/core: ' +
+        fmt(r.swapPerCore) + ' GiB',
+      'Power policy: ' + fmt(r.powerPolicy),
       'HS23 score: ' + fmt(r.score) + '   |   Power: ' + power,
       'HS23/W: ' + fmt(r.hs23PerW) + '   |   W/HS23: ' + fmt(r.wPerHs23),
       'Rel. time to solution: ' + fmt(r.x),

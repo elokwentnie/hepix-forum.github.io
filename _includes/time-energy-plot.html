@@ -57,8 +57,18 @@
 
 <script id="tes-data" type="application/json">
 [
-{% assign tes_rows = site.data.HS23scores | where_exp: "row", "row.relative_energy_to_solution" -%}
-{% for row in tes_rows -%}
+{% assign tes_key_ram = "RAM [GiB]" -%}
+{% assign tes_key_ram_core = "RAM/core [GiB]" -%}
+{% assign tes_key_swap_core = "SWAP/core [GiB]" -%}
+{% assign tes_key_power = "Average Electric Power [W]" -%}
+{% assign tes_key_power_std = "Std Electric Power [W]" -%}
+{% assign tes_key_rel_e = "Relative Energy To Solution" -%}
+{% assign tes_key_rel_t = "Relative Time To Solution" -%}
+{% assign first_tes = true -%}
+{% for row in site.data.HS23scores -%}
+{% assign tes_y = row[tes_key_rel_e] -%}
+{% if tes_y and tes_y != "" -%}
+{% unless first_tes %},{% endunless %}{% assign first_tes = false %}
   {
     "cpu": {{ row.CPU | jsonify }},
     "site": {{ row.Site | jsonify }},
@@ -67,21 +77,25 @@
     "cores_per_socket": {{ row["Cores/Socket"] | jsonify }},
     "threads_per_core": {{ row["Threads/core"] | jsonify }},
     "ncores": {{ row.Ncores | jsonify }},
-    "ram": {{ row.RAM | jsonify }},
+    "numa": {{ row["NUMA nodes"] | jsonify }},
+    "ram": {{ row[tes_key_ram] | jsonify }},
+    "ram_per_core": {{ row[tes_key_ram_core] | jsonify }},
+    "swap_per_core": {{ row[tes_key_swap_core] | jsonify }},
     "power_policy": {{ row["Power Policy"] | jsonify }},
     "meas": {{ row["# Meas"] | jsonify }},
     "score": {{ row.Score | jsonify }},
     "score_per_ncores": {{ row["Score/Ncores"] | jsonify }},
     "spread": {{ row.Spread | jsonify }},
-    "power_mean": {{ row.electric_power_mean | jsonify }},
-    "power_std": {{ row.electric_power_std | jsonify }},
+    "power_mean": {{ row[tes_key_power] | jsonify }},
+    "power_std": {{ row[tes_key_power_std] | jsonify }},
     "hs23_per_w": {{ row["HS23/W"] | jsonify }},
     "w_per_hs23": {{ row["W/HS23"] | jsonify }},
-    "x": {{ row.relative_time_to_solution | jsonify }},
-    "y": {{ row.relative_energy_to_solution | jsonify }},
+    "x": {{ row[tes_key_rel_t] | jsonify }},
+    "y": {{ tes_y | jsonify }},
     "first_date": {{ row.first_date | jsonify }},
     "last_date": {{ row.last_date | jsonify }}
-  }{% unless forloop.last %},{% endunless %}
+  }
+{% endif -%}
 {% endfor -%}
 ]
 </script>

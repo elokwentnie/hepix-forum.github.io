@@ -17,9 +17,12 @@ For details on how to enable this, see the [official script documentation](https
 
 Power consumption is measured using the command: `ipmitool dcmi power reading`
 
-For an interactive view of the power-related metrics, see the
-[Time and Energy to Solution]({{ "/benchmarking/time_energy_to_solution.html" | relative_url }})
-page.
+<div class="update-banner update-banner--new" role="note">
+  <p class="update-banner__label"><span class="update-banner__badge">New</span> Interactive plot</p>
+  <p class="update-banner__message">For an interactive view of the power-related metrics, see the
+  <a href="{{ "/benchmarking/time_energy_to_solution.html" | relative_url }}">Time and Energy to Solution</a>
+  page.</p>
+</div>
 
 **Important note:**  
 The values reported by `ipmitool` may differ from those obtained via Power Distribution Units (PDUs).  
@@ -35,10 +38,10 @@ Accuracy depends on the server’s hardware and firmware implementation. Therefo
   <li><strong><code>Score/Ncores</code></strong>: The performance score normalized by the number of available cores (physical or logical).</li>
   <li><strong><code>sem</code></strong> (Standard Error of the Mean): A measure of the statistical uncertainty of the score, calculated from multiple runs.</li>
   <li><strong><code>Spread</code></strong>: A measure of variability across the benchmark runs, calculated as the relative difference between the 95th and 5th percentiles, normalized by the median.</li>
-  <li><strong><code>electric_power_mean</code></strong>, <strong><code>electric_power_std</code></strong>: For each measurement time series collected during the benchmark run, the <strong>85th percentile</strong> is determined. Mean and std are then evaluated across all measurement series.</li>
-  <li><strong><code>HS23/W</code></strong> = Score / <code>electric_power_mean</code></li>
-  <li><strong><code>1/HS23</code></strong>, <strong><code>W/HS23</code></strong>: inverse score (a time-to-solution proxy) and Watt per unit score (an energy-to-solution proxy).</li>
-  <li><strong><code>relative_time_to_solution</code></strong>, <strong><code>relative_energy_to_solution</code></strong>: the two proxies above, each normalized to the fastest power-reporting configuration. These drive the interactive <a href="{{ "/benchmarking/time_energy_to_solution.html" | relative_url }}">Time and Energy to Solution</a> plot.</li>
+  <li><strong><code>Average Electric Power [W]</code></strong>, <strong><code>Std Electric Power [W]</code></strong>: For each measurement time series collected during the benchmark run, the <strong>85th percentile</strong> is determined. Mean and std are then evaluated across all measurement series.</li>
+  <li><strong><code>HS23/W</code></strong> = Score / <code>Average Electric Power [W]</code></li>
+  <li><strong><code>W/HS23</code></strong>: Watt per unit score (an energy-to-solution proxy).</li>
+  <li><strong><code>Relative Time To Solution</code></strong>, <strong><code>Relative Energy To Solution</code></strong>: time-to-solution and energy-to-solution proxies, each normalized to the fastest power-reporting configuration. These drive the interactive <a href="{{ "/benchmarking/time_energy_to_solution.html" | relative_url }}">Time and Energy to Solution</a> plot.</li>
 </ul>
 
 </details>
